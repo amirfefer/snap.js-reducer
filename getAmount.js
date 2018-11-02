@@ -1,6 +1,5 @@
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-      if (request.reduce)
         var jsSnippets = document.getElementsByClassName('js-file-header')
         var snapFiles = [];
         var numberOfLines = 0;
@@ -19,9 +18,13 @@ chrome.runtime.onMessage.addListener(
         }
 
         var totalDiff = document.getElementsByClassName('diffbar-item diffstat');
-        var totalAddition =  parseInt(totalDiff[0].children[0].innerText);
-        
-        totalDiff[0].children[0].innerText = '+' + (totalAddition - numberOfLines);
+        var totalAddition =  parseInt(totalDiff[0].children[0].innerText.replace(/\D/g,''));
+        var substraction = totalAddition - numberOfLines;
+
+        if (request.reduce)
+          totalDiff[0].children[0].innerText = '+' + substraction;
+        else
+          totalDiff[0].children[0].innerText += ' (' + numberOfLines + ' snaps)';
 
 
         sendResponse({done: true});
