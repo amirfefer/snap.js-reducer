@@ -5,7 +5,7 @@ chrome.runtime.onMessage.addListener(
         var numberOfLines = 0;
 
         for ( i =0; i < jsSnippets.length ; i++) {
-          if(jsSnippets[i].dataset.path.match('/.*snap')) {
+          if(jsSnippets[i].dataset.path.match('/.*js.snap')) {
             snapFiles.push(jsSnippets[i])
           }
         }

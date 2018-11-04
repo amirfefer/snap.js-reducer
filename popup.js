@@ -3,9 +3,14 @@ document.addEventListener('DOMContentLoaded', function() {
     var reducerToggle = document.getElementById('toggle');
     var img = document.getElementById('example');
     var images = {true: 'reduced.png', false: 'unreduce.png'}
-
-    img.src = images[reducerToggle.checked]
+    
+    chrome.storage.sync.get(['reduce'], function(result) {
+        reducerToggle.checked = result.reduce;
+        img.src = images[reducerToggle.checked]
+      });
+ 
     reducerToggle.addEventListener('change', function() {
+        chrome.storage.sync.set({"reduce": reducerToggle.checked});
         img.src = images[reducerToggle.checked]
     });
     checkPageButton.addEventListener('click', function() {
